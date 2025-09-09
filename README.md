@@ -43,6 +43,7 @@ mvn spring-boot:run
 The service will start on **[http://localhost:8080](http://localhost:8080)**.
 
 Swagger UI is available at **[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)**.
+
 ![img.png](src/main/resources/static/swagger.png)
 ---
 
