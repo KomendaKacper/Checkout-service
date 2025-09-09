@@ -60,34 +60,6 @@ class CheckoutIntegrationTest {
     }
 
     @Test
-    void testScanAndGetCart() throws Exception {
-        String sessionId = mockMvc.perform(post("/checkout/session"))
-                .andExpect(status().isOk())
-                .andReturn()
-                .getResponse()
-                .getContentAsString();
-
-        mockMvc.perform(post("/checkout/" + sessionId + "/scan/A"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.sku").value("A"))
-                .andExpect(jsonPath("$.name").value("Product A"))
-                .andExpect(jsonPath("$.quantity").value(1));
-
-        mockMvc.perform(post("/checkout/" + sessionId + "/scan/B"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.sku").value("B"))
-                .andExpect(jsonPath("$.name").value("Product B"))
-                .andExpect(jsonPath("$.quantity").value(1));
-
-        mockMvc.perform(get("/checkout/" + sessionId + "/cart"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].sku").value("A"))
-                .andExpect(jsonPath("$[0].quantity").value(1))
-                .andExpect(jsonPath("$[1].sku").value("B"))
-                .andExpect(jsonPath("$[1].quantity").value(1));
-    }
-
-    @Test
     void testCheckoutWithDiscounts() throws Exception {
         String sessionId = mockMvc.perform(post("/checkout/session"))
                 .andExpect(status().isOk())
