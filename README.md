@@ -18,6 +18,39 @@ Key features:
 
 ---
 
+### 1. Project Structure and Key Classes
+
+The Checkout Service 3.0 project follows a **typical Spring Boot structure**:
+
+```
+src/main/java/com/example/checkout_service/
+├── config/           # Configuration classes
+├── controller/       # REST controllers handling HTTP requests
+├── dto/              # Data Transfer Objects for API responses
+├── exception/        # Global exception handling
+├── model/            # JPA entities representing products, carts, and bundles
+├── repository/       # Spring Data JPA repositories
+├── service/          # Business logic for checkout, scanning, and discounts
+└── CheckoutServiceApplication.java  # Main Spring Boot application
+```
+
+**Key Classes:**
+
+* `CheckoutController` – Handles REST API endpoints for starting a session, scanning products, and generating receipts.
+* `CheckoutService` – Core business logic for managing sessions, applying multi-price rules, bundle discounts, and computing totals.
+* `ScanResponseDTO` – DTO returned after scanning a product, includes SKU, name, and quantity.
+* `ReceiptDTO` – DTO returned when checking out a session, contains items, applied bundles, and total price.
+* `Product` – JPA entity representing a product in the store, including SKU, name, and price.
+* `CartItem` – Entity representing a product and its quantity in a checkout session.
+* `BundleDiscount` – Entity describing a bundle of products and the discount applied.
+* `DataInitializer` – Automatically inserts default products and bundles into the database if none exist.
+* `OpenApiConfiguration` – Configures Swagger/OpenAPI documentation for the API.
+* `GlobalExceptionHandler` – Handles application-wide exceptions and returns consistent API error responses.
+
+This structure separates **API, business logic, configuration, exception handling, and data access**, making the application easy to maintain and extend.
+
+---
+
 ## How to Build and Run
 
 ### Prerequisites
@@ -49,7 +82,7 @@ Swagger UI is available at **[http://localhost:8080/swagger-ui.html](http://loca
 
 ## Using the Checkout Service
 
-### 1. Start a Checkout Session
+### 2. Start a Checkout Session
 
 ```http
 POST /checkout/session
@@ -65,7 +98,7 @@ Response:
 
 ---
 
-### 2. Scan Products
+### 3. Scan Products
 
 Add products to the checkout session using the SKU:
 
@@ -96,7 +129,7 @@ Response:
 
 ---
 
-### 3. Checkout and Get Receipt
+### 4. Checkout and Get Receipt
 
 After scanning all items, get the final receipt:
 
@@ -165,14 +198,14 @@ Sample response:
 
 ---
 
-### 4. Session Persistence
+### 5. Session Persistence
 
 * Sessions are stored in a **file-based H2 database**.
 * You can continue a session using the same `sessionId` after restarting the application.
 
 ---
 
-### 5. Example Workflow with `curl`
+### 6. Example Workflow with `curl`
 
 #### Start Session
 
@@ -197,7 +230,7 @@ curl -X GET http://localhost:8080/checkout/{sessionId}/receipt
 
 ---
 
-### 6. Endpoint Summary
+### 7. Endpoint Summary
 
 | Endpoint                           | Method | Description                                         |
 | ---------------------------------- | ------ | --------------------------------------------------- |
@@ -207,7 +240,7 @@ curl -X GET http://localhost:8080/checkout/{sessionId}/receipt
 
 ---
 
-### 7. Running Tests and Test Coverage
+### 8. Running Tests and Test Coverage
 
 The project uses **JaCoCo** to generate test coverage reports. After running the unit tests:
 
@@ -226,7 +259,7 @@ target/site/jacoco/index.html
 ![img.png](src/main/resources/static/testCoverage.png)
 ---
 
-### 8. Conclusion
+### 9. Conclusion
 
 Checkout Service provides a flexible and stateful checkout system for managing products, applying multi-price rules, bundle discounts, and generating detailed receipts.
 
